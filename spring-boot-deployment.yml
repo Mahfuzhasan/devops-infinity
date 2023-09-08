@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-devops
+  template:
+    metadata:
+      labels:
+        app: spring-boot-devops
+    spec:
+      containers:
+        - name: spring-boot-devops
+          image: spring-boot-devops-infinity:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:mysql://mysql:3306/devops_db"
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db-username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: db-password

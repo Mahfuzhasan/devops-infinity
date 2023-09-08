@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: alertmanager-config
+data:
+  alertmanager.yml: |
+    global:
+      smtp_smarthost: 'email-smtp.us-west-2.amazonaws.com:587'
+      smtp_from: 'mahfuzhasan@email.com'
+      smtp_auth_username: '${SMTP_AUTH_USERNAME}'
+      smtp_auth_password: "${SMTP_AUTH_PASSWORD}"
+    route:
+      group_by: ['job', 'severity']
+      routes:
+        - match:
+            severity: 'critical'
+          receiver: 'email-me'
+    receivers:
+      - name: 'email-me'
+        email_configs:
+          - to: 'mahfuzhasan@email.com'
+            auth_username: "${SMTP_AUTH_USERNAME}"
+            auth_identity: "${SMTP_AUTH_IDENTITY}"
+            auth_password: "${SMTP_AUTH_PASSWORD}"

@@ -1,0 +1,9 @@
+groups:
+- name: example
+  rules:
+  - alert: HighCPU
+    expr: 100 - (avg(irate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance) * 100) > 90
+    labels:
+      severity: "critical"
+    annotations:
+      summary: "High CPU Usage"

@@ -1,0 +1,55 @@
+---
+- name: Deploy Application on Single EC2 with kind
+  hosts: target
+  become: true
+  remote_user: ubuntu
+
+  tasks:
+    # Create a kind cluster
+    - name: Create a kind cluster
+      shell: kind create cluster
+
+    # Ensure 'devops-infinity' directory is empty
+    - name: Ensure 'devops-infinity' directory is empty
+      command: "rm -rf devops-infinity; mkdir devops-infinity"
+      ignore_errors: yes
+
+    # Copy Jenkins workspace files
+    - name: Copy Jenkins workspace files
+      synchronize:
+        src: "{{ jenkins_workspace }}/"
+        dest: "devops-infinity/"
+
+    # Maven build
+    - name: Maven clean install
+      shell: cd devops-infinity && mvn clean install
+
+    # Docker Compose
+    - name: Docker Compose Build
+      shell: cd devops-infinity && docker-compose build
+
+    - name: Docker Compose Up
+      shell: cd devops-infinity && docker-compose up -d
+
+    # Apply Kubernetes Secrets
+    - name: Apply MySQL Secret
+      shell: kubectl apply -f devops-infinity/mysql-secret.yaml
+
+    - name: Apply AlertManager Secret
+      shell: kubectl apply -f devops-infinity/alertmanager-secret.yaml
+
+    - name: Apply DB Credentials Secret
+      shell: kubectl apply -f devops-infinity/db-credentials-secret.yaml
+
+    # Apply Kubernetes Deployments
+    - name: Apply MySQL Deployment
+      shell: kubectl apply -f devops-infinity/mysql-deployment.yml
+
+    - name: Apply Prometheus Deployment
+      shell: kubectl apply -f devops-infinity/prometheus.yml
+
+    - name: Apply AlertManager Deployment
+      shell: kubectl apply -f devops-infinity/alertmanager.yml
+
+    - name: Apply Spring Boot Deployment
+      shell: kubectl apply -f devops-infinity/spring-boot-deployment.yml
