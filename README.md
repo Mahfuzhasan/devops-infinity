@@ -313,8 +313,8 @@ data:
   alertmanager.yml: |
     global:
       smtp_smarthost: 'email-smtp.us-west-2.amazonaws.com:587'
-      smtp_from: 'mahfuzhasan.ca@gmail.com'
-      smtp_auth_username: 'AKIA3E4Z7YZLAKZH4M57'
+      smtp_from: 'mahfuzhasan@email.com'
+      smtp_auth_username: '${SMTP_AUTH_USERNAME}'
       smtp_auth_password: "${SMTP_AUTH_PASSWORD}"
     route:
       group_by: ['job', 'severity']
@@ -325,7 +325,7 @@ data:
     receivers:
       - name: 'email-me'
         email_configs:
-          - to: 'destination-email@example.com'
+          - to: 'mahfuzhasan@email.com'
             auth_username: "${SMTP_AUTH_USERNAME}"
             auth_identity: "${SMTP_AUTH_IDENTITY}"
             auth_password: "${SMTP_AUTH_PASSWORD}"
