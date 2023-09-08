@@ -2,12 +2,8 @@
 
 ## Objective
 Implemented a full-stack DevOps project focused on creating a comprehensive automation cycle for a Spring Boot application. The project integrates DevOps best practices and features end-to-end CI/CD automation, container orchestration, real-time monitoring, and alerting, all deployed on a Kubernetes cluster.
-
 ## Technologies
-<<<<<<< HEAD
-Built using **Spring Boot**, **Docker**, **Kubernetes**, **Jenkins**, **Ansible**, **Prometheus**, **Grafana**, and **Terraform**. Additionally, various **AWS services** were utilized, including **EC2**, **CodePipeline**, **SES**, **IAM**, and **S3**.
-=======
-Built using **Spring Boot**, **Docker**, **Kubernetes**, **Jenkins**, **Ansible**, **Prometheus**, **Grafana**, and **Terraform**. Additionally, various **AWS services** were utilized, including **EC2**, **CodePipeline**, **SES**, **IAM**, and **S3**.
+Built using **Spring Boot**, **Docker**, **Kubernetes**, **Jenkins**, **Ansible**, **Prometheus**, **Grafana**, and **Terraform**. Additionally, various **AWS services** were utilized, including **EC2**, **CodePipeline**, **SES**, **IAM**, and **S3**..
 ## Development, Containerization & Orchestration
 - Initialized a Spring Boot microservice with CRUD APIs and MySQL database integration.
 - Successfully containerized the service using Docker.
